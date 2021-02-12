@@ -1,0 +1,101 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.3.1/css/ol.css" type="text/css">
+    <style>
+      .map {
+        height: 920px;
+        width: 100%;
+      }
+    </style>
+   <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.3.1/build/ol.js"></script>
+    <title>KUWAIT PROJECTS</title>
+	
+  </head>
+<body>
+
+<div id="map" class="map"></div>
+<script>
+var map = new ol.Map({
+view: new ol.View({
+center: [5271100,3448000],
+zoom: 16,
+}),
+//layers: [
+//new ol.layer.Tile({
+//source: new ol.source.OSM()
+//})
+//],
+
+//Also here is a list of the available Google Maps tiles :
+
+//Roadmap
+//http://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}
+
+//Terrain
+//http://mt0.google.com/vt/lyrs=p&hl=en&x={x}&y={y}&z={z}
+
+//Altered roadmap
+//http://mt0.google.com/vt/lyrs=r&hl=en&x={x}&y={y}&z={z}
+
+//Satellite only
+//http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}
+
+//Terrain only
+//http://mt0.google.com/vt/lyrs=t&hl=en&x={x}&y={y}&z={z}
+
+//Hybrid
+//http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}
+
+
+layers: [
+        // Add a new Tile layer getting tiles from OpenStreetMap source
+        new ol.layer.Tile({
+            source: new ol.source.XYZ(
+                    {
+                        urls : ["http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}"]
+                    })
+        })
+    ],
+
+target: 'map'
+});
+
+var wmsSource = new ol.source.TileWMS({
+     url: 'http://morshed-projects.herokuapp.com/heroku_data/wms',
+     params: {'LAYERS': 'heroku_data:all_buildings','TILED': true},
+     serverType: 'geoserver',
+     projection: 'EPSG:32638',
+     transition: 0
+});
+
+var wmsLayer = new ol.layer.Tile({
+    opacity: 0.9,
+	source: wmsSource
+});
+
+map.addLayer(wmsLayer);
+
+
+
+var wmsSource = new ol.source.TileWMS({
+     url: 'http://morshed-projects.herokuapp.com/heroku_data/wms',
+     params: {'LAYERS': 'heroku_data:all_line','TILED': true},
+     serverType: 'geoserver',
+     projection: 'EPSG:32638',
+     transition: 0
+});
+
+var wmsLayer = new ol.layer.Tile({
+    opacity: 0.75,
+	source: wmsSource
+});
+
+map.addLayer(wmsLayer);
+
+
+//GET FEATURE INFO
+
+
+</script>
+</body>
+</html>	
